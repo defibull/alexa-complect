@@ -1,0 +1,96 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "Order",
+      "samples": [
+        "I want {Food} for dinner",
+        "I want {Food} for lunch",
+        "I want {Food} for breakfast",
+        "I want to have {Food}",
+        "I feel like having {Food}",
+        "I feel like eating {Food}",
+        "Let's have {Food}",
+        "I want {Food}"
+      ],
+      "slots": [
+        {
+          "name": "Food",
+          "type": "AMAZON.Food",
+          "samples": [
+            "I want {Food}",
+            "I want to have {Food}",
+            "{Food}",
+            "I feel like eating {Food} today"
+          ]
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "Confirm.Intent-Order",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "Are you sure you can handle {Food}?"
+        },
+        {
+          "type": "PlainText",
+          "value": "So you want {Food}, huh?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-Order.IntentSlot-Food",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "Am I supposed to guess what you want to eat?"
+        },
+        {
+          "type": "PlainText",
+          "value": "What do you want to eat, brah?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "version": "1.0",
+    "intents": [
+      {
+        "name": "Order",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirm": "Confirm.Intent-Order"
+        },
+        "slots": [
+          {
+            "name": "Food",
+            "type": "AMAZON.Food",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-Order.IntentSlot-Food"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
